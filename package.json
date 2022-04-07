@@ -1,0 +1,28 @@
+{
+  "name": "4koal",
+  "version": "1.0.0",
+  "description": "ACL based proxy server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CyberneTech/4koal.git"
+  },
+  "keywords": [
+    "proxy",
+    "acl",
+    "auth",
+    "api",
+    "middleware",
+    "logging",
+    "security"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CyberneTech/4koal/issues"
+  },
+  "homepage": "https://github.com/CyberneTech/4koal#readme"
+}

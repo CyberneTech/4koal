@@ -2,14 +2,15 @@ const express = require('express');
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
   
-const app = express();
-  
 dotenv.config();
 
+const app = express();
+app.use(express.json());
+
 // token generation
-app.post("/generateToken", (req, res) => {
+app.post("/login", (req, res) => {
   
-    let jwtSecretKey = process.env.JWT_SECRET_KEY;
+    let jwtSigningKey = process.env.JWT_SIGNING_KEY;
     /* schema of user ->
     {
     userID : "",
@@ -20,13 +21,9 @@ app.post("/generateToken", (req, res) => {
     let data = {
         userID: req.body.userID,
         secretKey: req.body.secretKey
-        //password: req.body.password,
-        //role: req.body.role
     }
 
-    //let { id, pass, role } = req.body;
-
-    const token = jwt.sign(data, jwtSecretKey);  
+    const token = jwt.sign(data, jwtSigningKey);  
     res.send(token);
 });
   

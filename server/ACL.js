@@ -201,12 +201,10 @@ function authorize(req, res, next) {
 }
 
 /**
- * The middleware function to be used for token verification and role extraction
- * @param req
- * @param res
- * @param next
+ * The middleware function to be used for role extraction
+ * @param key
  */
- function authenticate(req, res, next) {
+ function assignRole(key) {
     var flag=0;
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];

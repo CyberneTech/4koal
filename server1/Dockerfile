@@ -1,6 +1,6 @@
 FROM node:latest
 
-COPY test /usr/app
+COPY . /usr/app
 WORKDIR /usr/app
 
 EXPOSE 4000

@@ -1,11 +1,31 @@
 version: "3.9"
 services:
   server1:
-    build: .
+    build: ./server1
     container_name: server1
     hostname: server1
     ports:
       - "4001:4000"
+      - 4000
+    networks:
+      - lsmnet
+
+  server2:
+    build: ./server2
+    container_name: server2
+    hostname: server2
+    ports:
+      - "4002:4000"
+      - 4000
+    networks:
+      - lsmnet
+
+  server3:
+    build: ./server3
+    container_name: server3
+    hostname: server3
+    ports:
+      - "4003:4000"
       - 4000
     networks:
       - lsmnet
@@ -18,6 +38,8 @@ services:
       - "8082:80"
     depends_on:
       - server1
+      - server2
+      - server3
     networks:
       - lsmnet
 

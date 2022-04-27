@@ -43,7 +43,8 @@ function validateToken(req, res) {
     let jwtSigningKey = process.env.JWT_SIGNING_KEY;
     try {
         const decoded = jwt.verify(token, jwtSigningKey);
-            return assignRole(decoded.secretKey);
+            let role =  assignRole(decoded.secretKey);
+            return role;
         }
     catch (error) {
         return error;
@@ -62,10 +63,13 @@ function validateToken(req, res) {
  * @param key
  */
  function assignRole(secretKey) {
-    var flag=0;
-    secret_keys.forEach(function(role, key) {
-        if (secretKey==key) return role
+    var Role
+    secret_keys.forEach(function(key, role) {
+        if (secretKey==key) {
+            Role = role;
+        }
     });
+    return Role;
 }
 
 module.exports = {generateToken, validateToken};

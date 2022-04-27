@@ -1,0 +1,14 @@
+{
+    "userGroups": {
+        "admin": "user",
+        "shruti": "group2"
+    },
+    "groupAuthorizations": {
+        "user": {
+            "^/server1$": ["PUT"]
+        },
+        "group2": {
+            "^/server1$": ["GET"]
+        }
+    }
+}

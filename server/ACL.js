@@ -53,7 +53,6 @@ function readRules() {
 		throw new Error('Invalid rule file given. Make sure the file is a proper JSON');
 	}
 	configs.rules = rules;
-    console.log(configs.rules);
 }
 
 /**
@@ -179,7 +178,7 @@ function authorize(req, res, next) {
 
 		req[configs.roleObjectKey].role = configs.defaultRole;
 	}
-
+    console.log(configs.rules);
 	let role = req[configs.roleObjectKey].role;
 	let url = req.originalUrl;
 
@@ -201,8 +200,34 @@ function authorize(req, res, next) {
 	next();
 }
 
+/**
+ * The middleware function to be used for token verification and role extraction
+ * @param req
+ * @param res
+ * @param next
+ */
+ function authenticate(req, res, next) {
+    var flag=0;
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (token == null) return res.sendStatus(401);
+    secret_key.forEach(function(role, key) {
+    jwt.verify(token,role, (err, user) => {
+        if (!err)
+        {   req.user = user;
+            req.role = role;
+            flag=1;
+			next();
+        }
+        if (flag == 0) req.role=null
+    });
+   });
+}
+
+
 module.exports = {
 	config,
+    authenticate,
 	authorize,
 	UnauthorizedError
 };

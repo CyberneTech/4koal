@@ -1,17 +1,34 @@
+ require('dotenv').config();
 
-var http = require('http'),
-net = require('net'),
-httpProxy = require("http-proxy");
-url = require('url'),
-util = require('util');
+// const acl = require('./ACL');
+ const auth = require('./auth');
+ const express = require('express');
+const jwt = require('jsonwebtoken');
+// const httpProxy = require('http-proxy');
 
-httpProxy.createProxyServer({target:'http://localhost:9000'}).listen(4000);
+ const app = express();
+ app.use(express.json())
 
-var server = http.createServer(function(req, res) {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.write('request successfully proxied!' + '\n' + JSON.stringify(req.headers, true, 2));
-    res.end();
+
+// app.all('/',acl.authorize, (req, res) => {
+//     // configuring acl 
+//     acl.config({
+//         path: '../test/rules.json',
+//         roleObjectKey: req.role,
+//         defaultRole: 'guest'
+//     });
+// });
+app.post('/login',(req,res)=>{
+    const token = auth.generateToken(req);
+    res.send(token);
 });
-console.log("listening on port 5050");
-server.listen(9000);
+
+app.get('/test',(req,res)=>{
+    const response = auth.validateToken(req,res);
+    console.log(response);
+    res.send(response);
+});
+
+app.listen(6000);
+
 

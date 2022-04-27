@@ -7,9 +7,11 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// token generation
-app.post("/login", (req, res) => {
-  
+/* The middleware function to be used generating Token
+* @param req
+* @param res
+*/
+function generateToken(req) {
     let jwtSigningKey = process.env.JWT_SIGNING_KEY;
     /* schema of user ->
     {
@@ -17,34 +19,42 @@ app.post("/login", (req, res) => {
     secretKey: ""
     }
     */
-    
     let data = {
         userID: req.body.userID,
         secretKey: req.body.secretKey
     }
 
     const token = jwt.sign(data, jwtSigningKey);  
-    res.send(token);
-});
-  
-// token validation 
-app.get("/validateToken", (req, res) => {
-  
-    let tokenHeaderKey = process.env.TOKEN_HEADER_KEY;
-    let jwtSecretKey = process.env.JWT_SECRET_KEY;
-  
-    try {
-        const token = req.header(tokenHeaderKey);
-  
-        const verified = jwt.verify(token, jwtSecretKey);
-        if(verified){
-            return res.send("Successfully Verified");
-        }else{
-            return res.status(401).send(error);
-        }
-    } catch (error) {
-        return res.status(401).send(error);
-    }
-});
+    return token;
+}
 
-module.exports = app;
+
+  
+/* The middleware function to be used validating Token
+* @param req
+* @param res
+* @param next
+*/
+function validateToken(req, res) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (token == null) return res.sendStatus(401);
+    
+    let jwtSigningKey = process.env.JWT_SIGNING_KEY;
+    try {
+        const decoded = jwt.verify(token, jwtSigningKey);
+            return decoded;
+        }
+    //     if(verified){
+    //         console.log(verified);
+    //         return 1;
+    //     }else{
+    //         console.log(verified);
+    //         return 0;
+    //     }
+    catch (error) {
+        return error;
+    }
+}
+
+module.exports = {generateToken, validateToken};

@@ -1,9 +1,9 @@
 var express = require('express');
 var app = express();
-var PORT = 2000;
+var PORT = 5000;
 
 app.get('/', function(req, res) {
-    res.status(200).send('Hello from SERVER 1!!');
+    res.status(200).send('Hello from SERVER 3!!');
 });
 
 app.listen(PORT, function() {

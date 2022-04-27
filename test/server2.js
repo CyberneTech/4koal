@@ -1,11 +1,11 @@
-var express = require('express');
-var app = express();
-var PORT = 4000;
+const http = require('http');
 
-app.get('/', function(req, res) {
-    res.status(200).send('Hello from SERVER 2!!');
-});
-
-app.listen(PORT, function() {
-    console.log('Server is running on PORT:', PORT);
+const server = http.createServer((req, res) => {
+    const options = {
+        host: 'localhost',
+        port: 3000,
+        path: ' /server2',
+        methods: req.method,
+        headers: req.headers
+    };
 });

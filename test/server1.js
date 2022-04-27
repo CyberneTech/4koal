@@ -1,11 +1,19 @@
-var express = require('express');
-var app = express();
-var PORT = 2000;
+// const http = require('http');
 
-app.get('/', function(req, res) {
-    res.status(200).send('Hello from SERVER 1!!');
-});
+// const server = http.createServer((req, res) => {
+//     const options = {
+//         host: 'localhost',
+//         port: 4000,
+//         path: ' /server1',
+//         methods: req.method,
+//         headers: req.headers
+//     };
+// });
 
-app.listen(PORT, function() {
-    console.log('Server is running on PORT:', PORT);
-});
+var http = require('http');
+
+http.createServer(function (req, res) {
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.write('Hello World!');
+    res.end();
+}).listen(4000);

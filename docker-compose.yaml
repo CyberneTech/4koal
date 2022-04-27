@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  server1:
+    build: .
+    container_name: server1
+    hostname: server1
+    ports:
+      - "4001:4000"
+      - 4000
+    networks:
+      - lsmnet
+
+  nginx-gatekeeper:
+    build: ./nginx
+    container_name: nginx-gatekeeper
+    hostname: nginx-gatekeeper
+    ports:
+      - "8082:80"
+    depends_on:
+      - server1
+    networks:
+      - lsmnet
+
+networks:
+  lsmnet:
+    driver: bridge

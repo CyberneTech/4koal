@@ -1,22 +1,19 @@
-const http = require('http');
+// const http = require('http');
 
-const server = http.createServer((req, res) => {
-    const options = {
-        host: 'localhost',
-        port: 3000,
-        path: ' /server1',
-        methods: req.method,
-        headers: req.headers
-    };
-});
+// const server = http.createServer((req, res) => {
+//     const options = {
+//         host: 'localhost',
+//         port: 4000,
+//         path: ' /server1',
+//         methods: req.method,
+//         headers: req.headers
+//     };
+// });
 
-const makeRequest = (options,req,res) => {
-    const request = http.request(options, (response) => {
-        req.writeHead(response.statusCode, response.headers);
-        response.pipe(res,{end:true});
-    });
-    request.on('error', (e) => {
-        console.error(e);
-    });
-    request.end();
-};
+var http = require('http');
+
+http.createServer(function (req, res) {
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.write('Hello World!');
+    res.end();
+}).listen(4000);

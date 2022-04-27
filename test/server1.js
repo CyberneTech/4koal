@@ -1,15 +1,3 @@
-// const http = require('http');
-
-// const server = http.createServer((req, res) => {
-//     const options = {
-//         host: 'localhost',
-//         port: 4000,
-//         path: ' /server1',
-//         methods: req.method,
-//         headers: req.headers
-//     };
-// });
-
 var http = require('http');
 
 http.createServer(function (req, res) {

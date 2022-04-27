@@ -200,32 +200,11 @@ function authorize(req, res, next) {
 	next();
 }
 
-/**
- * The middleware function to be used for role extraction
- * @param key
- */
- function assignRole(key) {
-    var flag=0;
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-    if (token == null) return res.sendStatus(401);
-    secret_key.forEach(function(role, key) {
-    jwt.verify(token,role, (err, user) => {
-        if (!err)
-        {   req.user = user;
-            req.role = role;
-            flag=1;
-			next();
-        }
-        if (flag == 0) req.role=null
-    });
-   });
-}
+
 
 
 module.exports = {
 	config,
-    authenticate,
 	authorize,
 	UnauthorizedError
 };

@@ -27,6 +27,7 @@
     - OPENAPI verification
     - rate limiting
     - File validation for malicious content(option)
+    - logging (optional)
 
 
 

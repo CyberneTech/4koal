@@ -1,6 +1,6 @@
  require('dotenv').config();
 
- //const acl = require('./ACL');
+ const acl = require('./ACL');
  const auth = require('./auth');
  const express = require('express');
  const httpProxy = require('http-proxy');
@@ -14,15 +14,14 @@ app.post('/login',(req,res)=>{
     res.send(token);
 });
 
-app.all('/server1', (req,res)=>{
+app.all('/server1',acl.authorize, (req,res)=>{
     const role = auth.validateToken(req,res);
-    console.log(role);
-        // // configuring acl 
-        // acl.config({
-        //     path: '../test/rules.json',
-        //     roleObjectKey: role,
-        //     defaultRole: 'guest'
-        // });
+        // configuring acl 
+        acl.config({
+            path: '../test/rules.json',
+            roleObjectKey: role,
+            defaultRole: 'guest'
+        });
 });
 
 app.listen(6000);

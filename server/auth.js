@@ -2,52 +2,59 @@ const express = require('express');
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
   
-const app = express();
-  
 dotenv.config();
 
-// token generation
-app.post("/generateToken", (req, res) => {
-  
-    let jwtSecretKey = process.env.JWT_SECRET_KEY;
+const app = express();
+app.use(express.json());
+
+/* The middleware function to be used generating Token
+* @param req
+* @param res
+*/
+function generateToken(req) {
+    let jwtSigningKey = process.env.JWT_SIGNING_KEY;
     /* schema of user ->
     {
     userID : "",
     secretKey: ""
     }
     */
-    
     let data = {
         userID: req.body.userID,
         secretKey: req.body.secretKey
-        //password: req.body.password,
-        //role: req.body.role
     }
 
-    //let { id, pass, role } = req.body;
+    const token = jwt.sign(data, jwtSigningKey);  
+    return token;
+}
 
-    const token = jwt.sign(data, jwtSecretKey);  
-    res.send(token);
-});
+
   
-// token validation 
-app.get("/validateToken", (req, res) => {
-  
-    let tokenHeaderKey = process.env.TOKEN_HEADER_KEY;
-    let jwtSecretKey = process.env.JWT_SECRET_KEY;
-  
+/* The middleware function to be used validating Token
+* @param req
+* @param res
+* @param next
+*/
+function validateToken(req, res) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (token == null) return res.sendStatus(401);
+    
+    let jwtSigningKey = process.env.JWT_SIGNING_KEY;
     try {
-        const token = req.header(tokenHeaderKey);
-  
-        const verified = jwt.verify(token, jwtSecretKey);
-        if(verified){
-            return res.send("Successfully Verified");
-        }else{
-            return res.status(401).send(error);
+        const decoded = jwt.verify(token, jwtSigningKey);
+            return decoded;
         }
-    } catch (error) {
-        return res.status(401).send(error);
+    //     if(verified){
+    //         console.log(verified);
+    //         return 1;
+    //     }else{
+    //         console.log(verified);
+    //         return 0;
+    //     }
+    catch (error) {
+        return error;
     }
-});
+}
 
-module.exports = app;
+module.exports = {generateToken, validateToken};

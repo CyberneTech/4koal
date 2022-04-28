@@ -1,14 +1,20 @@
 {
     "userGroups": {
         "admin": "user",
-        "shruti": "group2"
+        "shruti": "group2",
+        "malika": "group3"
     },
     "groupAuthorizations": {
         "user": {
-            "^/server1$": ["PUT"]
+            "^/server1$": ["PUT","GET","POST","DELETE","PATCH"]
         },
         "group2": {
-            "^/server1$": ["GET"]
+            "^/server1$": ["GET"],
+            "^/server2$": ["GET","POST","DELETE"]
+        },
+        "group3": {
+            "^/server1$": ["GET"],
+            "^/server3$": ["PUT","GET","POST"]
         }
     }
 }

@@ -6,7 +6,9 @@
     },
     "groupAuthorizations": {
         "user": {
-            "^/server1$": ["PUT","GET","POST","DELETE","PATCH"]
+            "^/server1$": ["PUT","GET","POST","DELETE","PATCH"],
+            "^/server2$": ["PUT","GET","POST","DELETE","PATCH"],
+            "^/server3$": ["PUT","GET","POST","DELETE","PATCH"]
         },
         "group2": {
             "^/server1$": ["GET"],

@@ -1,78 +1,55 @@
 {
-	"guest": [
+	"shruti": [
 		{
 			"route": "/server1",
-			"methods": "*",
+			"methods": [
+				"GET"
+			],
+			"action": "allow"
+		},
+		{
+			"route": "/server2",
+			"methods": [
+				"GET",
+				"POST",
+				"DELETE"
+			],
 			"action": "allow"
 		}
 	],
 	"admin": [
 		{
-			"route": "/admin",
+			"route": "/server1",
+			"methods": "*",
+			"action": "allow"
+		},
+		{
+			"route": "/server2",
+			"methods": "*",
+			"action": "allow"
+		},
+		{
+			"route": "/server3",
 			"methods": "*",
 			"action": "allow"
 		}
 	],
-	"test-user": [
+	"malika": [
 		{
-			"route": "/test",
+			"route": "/server1",
 			"methods": [
 				"GET"
 			],
-			"action": "allow",
-			"subroutes": [
-				{
-					"route": "/test2",
-					"methods": [
-						"GET"
-					],
-					"action": "allow"
-				},
-				{
-					"route": "/star",
-					"methods": [
-						"GET"
-					],
-					"action": "allow"
-				},
-				{
-					"route": "/mid/*",
-					"methods": [
-						"GET"
-					],
-					"action": "allow",
-					"subroutes": [
-						{
-							"route": "star",
-							"methods": [
-								"GET"
-							],
-							"action": "allow"
-						}
-					]
-				}
-			]
+			"action": "allow"
 		},
 		{
-			"route": "/param/:test",
+			"route": "/server3",
 			"methods": [
-				"GET"
+				"GET",
+				"POST",
+				"PUT"
 			],
-			"action": "allow",
-			"subroutes": [
-				{
-					"route": "*",
-					"methods": [
-						"GET"
-					],
-					"action": "allow"
-				}
-			]
-		},
-		{
-			"route": "/deny",
-			"methods": "*",
-			"action": "deny"
+			"action": "allow"
 		}
 	]
 }
